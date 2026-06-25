@@ -75,7 +75,7 @@ export const isPhoneNumber: ValidationRule = (
   ? value.slice(1)
   : value;
 
-  if (digitsOnly.length < 8) {
+  if (digitsOnly.length < 7) {
     errors.push(phoneNumberTooShortError);
   }
 
