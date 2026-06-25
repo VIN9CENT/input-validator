@@ -1,4 +1,8 @@
-import type { ValidationError, ValidationRule } from "../types.ts";
+import type {
+  ValidationError,
+  ValidationRule,
+  ValidationValue,
+} from "../types.js";
 
 const requiredError: ValidationError = {
   rule: "isRequired",
@@ -6,7 +10,7 @@ const requiredError: ValidationError = {
   code: "REQUIRED",
 };
 
-export const isRequired: ValidationRule = (value): ValidationError[] => {
+export const isRequired: ValidationRule = (value: ValidationValue): ValidationError[] => {
   const isMissing =
     value === null ||
     value === undefined ||

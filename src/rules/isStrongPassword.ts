@@ -1,4 +1,4 @@
-import type { ValidationError, ValidationRule } from "../types.js";
+import type { ValidationError, ValidationRule, ValidationValue } from "../types.js";
 
 const minimumPasswordLength = 8;
 const uppercaseLetterRegex = /[A-Z]/;
@@ -34,7 +34,7 @@ const missingSpecialCharacterError: ValidationError = {
   code: "PASSWORD_MISSING_SPECIAL_CHARACTER",
 };
 
-export const isStrongPassword: ValidationRule = (value): ValidationError[] => {
+export const isStrongPassword: ValidationRule = (value: ValidationValue): ValidationError[] => {
   const errors: ValidationError[] = [];
   if (typeof value !== "string") {
     return [invalidTypeError];

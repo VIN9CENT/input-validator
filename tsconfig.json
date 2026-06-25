@@ -43,5 +43,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["vitest.config.ts", "node_modules"]
+  "exclude": ["vitest.config.ts", "node_modules", "src/tests", "dist"]
 }
