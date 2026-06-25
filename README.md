@@ -62,25 +62,34 @@ const result = validate("student@example.com", [isRequired, isEmail]);
 
 ## Coercion
 
-When `coerce: true` is enabled, string values are trimmed and converted to lowercase before validation.
+The validation engine supports an optional coerce mode to clean user input before validation rules are executed.
+
+## How it works
+
+When `{ coerce: true }` is enabled, the engine performs two types of cleaning:
+
+1. **Global Trimming:** All string inputs are automatically stripped of leading and trailing whitespace.
+2. **Contextual Lowercasing:** To protect data integrity, values are only converted to lowercase if the `isEmail` rule is being applied. This ensures that passwords or other case-sensitive fields are not altered incorrectly.
+
+## Example: Email Validation (Trimmed + Lowercased)
 
 ```ts
-import { validate, isRequired, isEmail } from "input-validator";
+import { validate, isEmail } from "input-validator";
 
-const result = validate("  STUDENT@EXAMPLE.COM  ", [isRequired, isEmail], {
+const result = validate("  USER@Example.com  ", [isEmail], {
   coerce: true,
 });
 ```
 
-The result keeps both values:
+## Example: Password Validation (Trimmed only)
 
-```json
-{
-  "valid": true,
-  "originalValue": "  STUDENT@EXAMPLE.COM  ",
-  "value": "student@example.com",
-  "errors": []
-}
+```ts
+import { validate, isStrongPassword } from "input-validator";
+
+const result = validate("  SafeP@ss123  ", [isStrongPassword], {
+  coerce: true,
+});
+```
 ```
 
 ## Available Rules
