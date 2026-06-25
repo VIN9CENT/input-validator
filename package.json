@@ -1,0 +1,19 @@
+{
+  "name": "input-validator",
+  "version": "1.0.0",
+  "description": "input validation engine",
+  "license": "ISC",
+  "author": "Vincent",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  }
+}
