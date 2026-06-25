@@ -85,3 +85,4 @@ if (!emailFormatRegex.test(value)) {
 
 return errors;
 };
+(isEmail as any).ruleName = "isEmail"

@@ -5,12 +5,23 @@ import type {
   ValidationValue,
 } from "./types.js";
 
-const coerceValue = (value: ValidationValue): ValidationValue => {
+const coerceValue = (
+  value: ValidationValue,
+  rules: ValidationRule[],
+): ValidationValue => {
   if (typeof value !== "string") {
     return value;
   }
 
-  return value.trim().toLowerCase();
+  let coerced = value.trim();
+
+  const hasEmailRule = rules.some((rule) => (rule as any).ruleName === "isEmail");
+
+  if (hasEmailRule) {
+    coerced = coerced.toLowerCase();
+  }
+
+  return coerced;
 };
 
 export const validate = (
@@ -18,7 +29,7 @@ export const validate = (
   rules: ValidationRule[],
   options: ValidationOptions = {},
 ): ValidationResult => {
-  const finalValue = options.coerce ? coerceValue(value) : value;
+  const finalValue = options.coerce ? coerceValue(value, rules) : value;
   const errors = rules.flatMap((rule) => rule(finalValue));
 
   return {
