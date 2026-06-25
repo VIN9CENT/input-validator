@@ -29,6 +29,7 @@ import {
   isUUID,
   isStrongPassword,
 } from "input-validator";
+**Note**: Use "./src/index.js" if running from source
 ```
 
 ## Validation Result
