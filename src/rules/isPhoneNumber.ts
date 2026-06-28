@@ -4,7 +4,7 @@ import type {
   ValidationValue,
 } from "../types.js";
 
-const e164PhoneNumberRegex = /^\+[1-9]\d{7,14}$/;
+const e164PhoneNumberRegex = /^\+[1-9]\d{6,14}$/;
 const whitespaceRegex = /\s/;
 const letterRegex = /[A-Za-z]/;
 

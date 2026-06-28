@@ -5,9 +5,8 @@ Input Validator is a small reusable TypeScript validation engine. It lets you va
 ## Installation
 
 ```bash
-git clone git@github.com:VIN9CENT/input-validator.git
-cd input-validator
-npm install
+
+npm install input-validator
 ```
 
 ## Run Tests

@@ -15,6 +15,18 @@ describe("isPhoneNumber", () => {
     expect(errors).toEqual([]);
   });
 
+  it("passes for a valid 7-digit E.164 phone number", () => {
+    const errors = isPhoneNumber("+1234567");
+
+    expect(errors).toEqual([]);
+  });
+
+  it("passes for a valid 8-digit E.164 phone number", () => {
+    const errors = isPhoneNumber("+12345678");
+
+    expect(errors).toEqual([]);
+  });
+
   it("fails when phone number does not start with plus sign", () => {
     const errors = isPhoneNumber("254712345678");
 
@@ -40,7 +52,7 @@ describe("isPhoneNumber", () => {
   });
 
   it("fails when phone number is too short", () => {
-    const errors = isPhoneNumber("+254");
+    const errors = isPhoneNumber("+123456");
 
     expect(errors.some((error) => error.code === "PHONE_TOO_SHORT")).toBe(true);
   });
