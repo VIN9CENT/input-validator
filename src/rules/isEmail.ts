@@ -43,46 +43,43 @@ const invalidEmailFormatError: ValidationError = {
 const whitespaceRegex = /\s/;
 const emailFormatRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-
 export const isEmail: ValidationRule = (
   value: ValidationValue,
 ): ValidationError[] => {
   if (typeof value !== "string") {
-  return [invalidTypeError];
-}
+    return [invalidTypeError];
+  }
 
-const errors: ValidationError[] = [];
+  const errors: ValidationError[] = [];
 
-if (whitespaceRegex.test(value)) {
-  errors.push(emailContainsSpacesError);
-}
+  if (whitespaceRegex.test(value)) {
+    errors.push(emailContainsSpacesError);
+  }
 
-if (!value.includes("@")) {
-  errors.push(missingAtSymbolError);
+  const atIndex = value.lastIndexOf("@");
+
+  if (atIndex === -1) {
+    errors.push(missingAtSymbolError);
+    return errors;
+  }
+
+  const localPart = value.slice(0, atIndex);
+  const domainPart = value.slice(atIndex + 1);
+
+  if (!localPart) {
+    errors.push(missingLocalPartError);
+  }
+
+  if (!domainPart) {
+    errors.push(missingDomainError);
+  }
+
+ 
+  if (errors.length === 0 && !emailFormatRegex.test(value)) {
+    errors.push(invalidEmailFormatError);
+  }
+
   return errors;
-}
-
-const parts = value.split("@");
-
-if (parts.length !== 2) {
-  errors.push(invalidEmailFormatError);
-  return errors;
-}
-
-const [localPart, domainPart] = parts;
-
-if (!localPart) {
-  errors.push(missingLocalPartError);
-}
-
-if (!domainPart) {
-  errors.push(missingDomainError);
-}
-
-if (!emailFormatRegex.test(value)) {
-  errors.push(invalidEmailFormatError);
-}
-
-return errors;
 };
-(isEmail as any).ruleName = "isEmail"
+
+(isEmail as any).ruleName = "isEmail";

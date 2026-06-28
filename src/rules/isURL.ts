@@ -60,14 +60,16 @@ export const isURL: ValidationRule = (
     return errors;
   }
 
-  try {
-    const url = new URL(value);
-
-    if (!url.hostname) {
+ 
+  if (errors.length === 0) {
+    try {
+      const url = new URL(value);
+      if (!url.hostname) {
+        errors.push(invalidURLFormatError);
+      }
+    } catch {
       errors.push(invalidURLFormatError);
     }
-  } catch {
-    errors.push(invalidURLFormatError);
   }
 
   return errors;

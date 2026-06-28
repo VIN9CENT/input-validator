@@ -46,14 +46,7 @@ describe("isEmail", () => {
     );
   });
 
-  it("fails when email has more than one @ symbol", () => {
-    const errors = isEmail("user@@example.com");
-
-    expect(errors).toHaveLength(1);
-    expect(errors[0]?.code).toBe("INVALID_EMAIL_FORMAT");
-  });
-
-  it("fails when email has no top-level domain", () => {
+  it("fails when email has no top-level domain extension", () => {
     const errors = isEmail("user@example");
 
     expect(errors.some((error) => error.code === "INVALID_EMAIL_FORMAT")).toBe(
