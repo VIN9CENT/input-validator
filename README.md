@@ -1,5 +1,7 @@
 # Input Validator
 
+## What This Library Does
+
 Input Validator is a small reusable TypeScript validation engine. It lets you validate one value with one or more rules and returns a structured result that explains what passed, what failed, and why.
 
 ## Installation
@@ -65,16 +67,18 @@ import { validate, isRequired, isEmail } from "input-validator";
 const result = validate("student@example.com", [isRequired, isEmail]);
 ```
 
-## Coercion Support
+## Coercion Support and Decisions
 
-The validation engine supports an optional coerce mode to clean user input before validation rules are executed.
+Coercion is disabled by default and must be explicitly enabled with `{ coerce: true }`.
 
-### How it works
+When enabled:
+- **Whitespace trimming** is applied to all string values. Leading and trailing spaces are common in copy-paste input and rarely intentional.
+- **Email lowercasing** is applied only when `isEmail` is one of the rules. Emails are case-insensitive by convention and storing them in lowercase prevents duplicates.
 
-When `{ coerce: true }` is enabled, the engine performs two types of cleaning:
-
-1. **Global Trimming:** All string inputs are automatically stripped of leading and trailing whitespace.
-2. **Contextual Lowercasing:** To protect data integrity, values are only converted to lowercase if the `isEmail` rule is being applied. This ensures that passwords or other case-sensitive fields are not altered incorrectly.
+What the library does not coerce:
+- Passwords are never lowercased — passwords are case-sensitive and altering them would break authentication.
+- Internal whitespace is never removed — a value like `hello world` is not collapsed to `helloworld`.
+- Non-string values are never converted — if a number is passed, it stays a number.
 
 ### Example: Email Validation (Trimmed + Lowercased)
 
@@ -126,3 +130,9 @@ import { validate, isUUID } from "input-validator";
 
 const result = validate("550e8400-e29b-41d4-a716-446655440000", [isUUID]);
 ```
+## Known Limitations
+
+- `isISODate` supports date-only strings in `YYYY-MM-DD` format. Datetime strings such as `2026-06-19T10:30:00Z` are not supported.
+- Coercion only trims whitespace and lowercases emails. No other transformations are applied.
+- Phone number validation follows E.164 format only. Local or national formats are not supported.
+- The library does not sanitize values for security purposes — it only validates format and structure.

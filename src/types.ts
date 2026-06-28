@@ -12,7 +12,9 @@ export interface ValidationResult {
   errors: ValidationError[];
 }
 
-export type ValidationRule = (value: ValidationValue) => ValidationError[];
+export type ValidationRule = ((value: ValidationValue) => ValidationError[]) & {
+  ruleName?: string;
+};
 
 export interface ValidationOptions {
   coerce?: boolean;

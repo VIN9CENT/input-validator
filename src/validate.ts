@@ -15,7 +15,7 @@ const coerceValue = (
 
   let coerced = value.trim();
 
-  const hasEmailRule = rules.some((rule) => (rule as any).ruleName === "isEmail");
+  const hasEmailRule = rules.some((rule) => rule.ruleName === "isEmail");
 
   if (hasEmailRule) {
     coerced = coerced.toLowerCase();
